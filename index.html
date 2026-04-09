@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Data Rekap</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        input, button { padding: 10px; margin: 10px 0; width: 100%; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Upload Data Rekap</h2>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" accept=".xlsx,.csv,.xls" required>
+        <button type="submit">Upload & Simpan ke Database</button>
+    </form>
+    <div id="message"></div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script>
+        const SHEETDB_API = "https://sheetdb.io/api/v1/YOUR_API_KEY_HERE";
+        
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) return;
+            
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = "Memproses data...";
+            
+            // Baca file Excel
+            const data = await file.arrayBuffer();
+            const workbook = XLSX.read(data);
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+            
+            // Kirim ke SheetDB
+            try {
+                const response = await fetch(SHEETDB_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(jsonData)
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    messageDiv.innerHTML = `<div class="success">✅ Berhasil! ${jsonData.length} baris tersimpan.</div>`;
+                } else {
+                    messageDiv.innerHTML = `<div class="error">❌ Gagal: ${result.message}</div>`;
+                }
+            } catch (error) {
+                messageDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>
