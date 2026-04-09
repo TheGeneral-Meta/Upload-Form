@@ -1,58 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Upload Data Rekap</title>
-    <style>
-        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
-        input, button { padding: 10px; margin: 10px 0; width: 100%; }
-        .success { color: green; }
-        .error { color: red; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Data Uploader</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h2>Upload Data Rekap</h2>
-    <form id="uploadForm">
-        <input type="file" id="fileInput" accept=".xlsx,.csv,.xls" required>
-        <button type="submit">Upload & Simpan ke Database</button>
-    </form>
-    <div id="message"></div>
-
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
-    <script>
-        const SHEETDB_API = "https://sheetdb.io/api/v1/YOUR_API_KEY_HERE";
+    <div class="container">
+        <h1>📊 Upload Data Rekap</h1>
+        <p>Upload file Excel/CSV → Otomatis ke Google Sheets</p>
         
-        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const file = document.getElementById('fileInput').files[0];
-            if (!file) return;
+        <form id="uploadForm">
+            <div class="form-group">
+                <label>📁 Pilih File (.xlsx, .csv, .xls)</label>
+                <input type="file" id="fileInput" accept=".xlsx,.csv,.xls" required>
+            </div>
             
-            const messageDiv = document.getElementById('message');
-            messageDiv.innerHTML = "Memproses data...";
+            <div class="form-group">
+                <label>📝 Mode Upload</label>
+                <select id="mode">
+                    <option value="new">Buat Spreadsheet BARU</option>
+                    <option value="existing">Tambahkan ke Spreadsheet EXISTING</option>
+                </select>
+            </div>
             
-            // Baca file Excel
-            const data = await file.arrayBuffer();
-            const workbook = XLSX.read(data);
-            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-            const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+            <div class="form-group" id="existingSheetGroup" style="display:none;">
+                <label>🔗 Spreadsheet ID (contoh: 1ABC123xyz)</label>
+                <input type="text" id="spreadsheetId" placeholder="Masukkan ID Google Sheets">
+            </div>
             
-            // Kirim ke SheetDB
-            try {
-                const response = await fetch(SHEETDB_API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(jsonData)
-                });
-                
-                const result = await response.json();
-                if (response.ok) {
-                    messageDiv.innerHTML = `<div class="success">✅ Berhasil! ${jsonData.length} baris tersimpan.</div>`;
-                } else {
-                    messageDiv.innerHTML = `<div class="error">❌ Gagal: ${result.message}</div>`;
-                }
-            } catch (error) {
-                messageDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
-            }
-        });
-    </script>
+            <div class="form-group">
+                <label>📄 Nama Sheet (opsional)</label>
+                <input type="text" id="sheetName" placeholder="Kosongkan = pakai nama dari file">
+            </div>
+            
+            <button type="submit" id="submitBtn">🚀 Upload & Proses</button>
+        </form>
+        
+        <div id="result" style="display:none;">
+            <h3>✅ Hasil Upload</h3>
+            <p id="resultMessage"></p>
+            <a id="resultLink" href="#" target="_blank">🔗 Buka Google Sheets</a>
+        </div>
+        
+        <div id="loading" style="display:none;">
+            <div class="spinner"></div>
+            <p>Memproses data, mohon tunggu...</p>
+        </div>
+    </div>
+    
+    <script src="/script.js"></script>
 </body>
 </html>
