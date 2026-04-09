@@ -1,0 +1,174 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+h1 {
+    color: #1a1a2e;
+    margin-bottom: 8px;
+}
+
+.alert {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.alert a {
+    color: #1976d2;
+}
+
+.step {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 16px;
+    margin: 20px 0;
+}
+
+.step h3 {
+    margin-top: 0;
+    color: #1a1a2e;
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+small {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    font-size: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.status {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.status.success {
+    color: #2e7d32;
+}
+
+.status.error {
+    color: #c62828;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.success-box {
+    background: #e8f5e9;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.success-box h3 {
+    margin: 0 0 10px 0;
+    color: #2e7d32;
+}
+
+.btn-link, .btn-copy {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    width: auto;
+}
+
+.btn-link {
+    background: #1976d2;
+    color: white;
+}
+
+.btn-copy {
+    background: #455a64;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#loading {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#result {
+    margin-top: 20px;
+}
