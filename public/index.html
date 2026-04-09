@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Data Uploader - Otomatis ke Google Sheets</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Rekap Data Uploader</h1>
+        <p>Upload Excel → Otomatis ke Google Sheets</p>
+        
+        <div class="alert info">
+            💡 <strong>Cara dapat credentials:</strong> 
+            <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console</a> 
+            → Buat Service Account → Download JSON
+        </div>
+        
+        <div class="step">
+            <h3>🔑 Step 1: Upload Credentials (JSON)</h3>
+            <div class="form-group">
+                <input type="file" id="jsonFile" accept=".json">
+                <small>File dari Google Cloud Service Account</small>
+            </div>
+            <div id="credsStatus" class="status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>📁 Step 2: Upload File Excel</h3>
+            <div class="form-group">
+                <input type="file" id="excelFile" accept=".xlsx,.xls,.csv">
+            </div>
+            
+            <div class="form-group">
+                <label>🔄 Mode</label>
+                <select id="mode">
+                    <option value="new">✨ Buat Spreadsheet BARU</option>
+                    <option value="existing">📂 Tambah ke Spreadsheet EXISTING</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="existingGroup" style="display:none;">
+                <label>🔗 Spreadsheet ID</label>
+                <input type="text" id="spreadsheetId" placeholder="Contoh: 1ABC123xyz">
+                <small>Dapat dari URL Google Sheets</small>
+            </div>
+            
+            <div class="form-group">
+                <label>📧 Share ke email (opsional)</label>
+                <input type="email" id="shareEmail" placeholder="email@domain.com">
+                <small>Spreadsheet akan dishare ke email ini</small>
+            </div>
+        </div>
+        
+        <button id="uploadBtn" disabled>🚀 Upload & Proses</button>
+        
+        <div id="loading" style="display:none;">
+            <div class="spinner"></div>
+            <p>Memproses data ke Google Sheets...</p>
+        </div>
+        
+        <div id="result" style="display:none;">
+            <div class="success-box">
+                <h3>✅ Berhasil!</h3>
+                <p id="resultMsg"></p>
+                <a id="resultLink" href="#" target="_blank" class="btn-link">🔗 Buka Google Sheets</a>
+                <button id="copyBtn" class="btn-copy">📋 Copy Link</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/script.js"></script>
+</body>
+</html>
