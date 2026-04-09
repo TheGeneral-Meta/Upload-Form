@@ -1,0 +1,9 @@
+{
+  "name": "rekap-uploader",
+  "version": "1.0.0",
+  "dependencies": {
+    "xlsx": "^0.18.5",
+    "googleapis": "^128.0.0",
+    "multer": "^1.4.5-lts.1"
+  }
+}
